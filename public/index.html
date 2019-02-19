@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Vue BrewLab</title>
+	<script src="./js/bundle.js"></script>
+</head>
+<body>
+
+	<h1>BrewLab App</h1>
+
+	<div id="app">
+		<label for="beer_select">Select a beer:</label>
+		<select v-on:change="beerSelect" id="beer_select" v-model="selectedBeerIndex">
+			<option disabled value="">Select a beer</option>
+			<option v-for="(beer, index) in beers" :value="index">{{ beer.name }}</option>
+		</select>
+
+	<div id="selected_beer" v-if="selectedBeer">
+		<h1>{{ selectedBeer.name }}</h1>
+		<h2>{{ selectedBeer.tagline }}</h2>
+		<img :src="selectedBeer.image_url" :alt="'Beer is: '+ selectedBeer.name" height="200px"/>
+		<button v-if="!beer" v-on:click="addToFavourites">Add Beer</button>
+	</div>
+
+	<div id="favourite_beers">
+		<ul v-if="favouriteBeers">
+			<li v-for="(beer, index) in favouriteBeers">
+				<h4>{{ beer.name }}</h4>
+				<h5>Malt:</h5>
+				<p v-for="malt in beer.ingredients.malt">{{ malt.name }}</p>
+				<h5>Hops:</h5>
+				<p v-for="hop in beer.ingredients.hops">{{ hop.name }}</p>
+				<h5>Yeast:</h5>
+				<p>{{ beer.ingredients.yeast }}</p>
+				<button v-on:click="removeFromFavourites(index)">Remove</button>
+			</li>
+		</ul>
+	</div>
+
+	</div>
+</body>
+</html>
